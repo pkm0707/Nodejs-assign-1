@@ -1,26 +1,22 @@
-const express = require("express"); //inbuilt package
+const express = require("express");
 const fs = require("fs");
 const app = express();
 const PORT = 5000;
 // home page
 app.get("/", (req, res) => {
-  res.send("Hi Everyone !");
+  res.send("Hi Everyone, Its Batman 🦇!");
 });
 
-//API 1
+//API-Call-1
 app.get("/createfile", (req, res) => {
   const currentDate = new Date();
-  //padStart - restricting the result to 2 digits and 0 will be added to prefix to make it 2 digits
   const formatedDate = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, "0")}-${currentDate.getDate().toString().padStart(2, "0")}`;
-  const formatedTime = currentDate.getHours();
+  const formatedTime = `(${currentDate.getHours()}-${currentDate.getMinutes()}-${currentDate.getSeconds()})`
   console.log(formatedDate, formatedTime);
   //file name as date-time.text
   const fileName = `${formatedDate}_${formatedTime}.txt`;
-  console.log(fileName);
-  const timestamp = currentDate.toISOString();
+  const timestamp = currentDate;
   const content = `TimeStamp: ${timestamp}`;
-  console.log(content);
-
   fs.writeFile(`./createfilefolder/${fileName}`, content, (err) => {
     if (err) console.log(err);
     console.log(`File: ${fileName} is created successfully`);
@@ -28,23 +24,16 @@ app.get("/createfile", (req, res) => {
   res.send({ TimeStamp: fileName });
 });
 
-// //API 2
-// app.get("/retrivefile", (req, res) => {
-//   var output = [];
-//   //read directory
-//   fs.readdir("./retrivefolder", (files) => {
-//     files.forEach((fileName) => {
-//       output.push({ files_updated: fileName });
-//     });
-//     res.send(output);
-//     console.log(output)
-//   });
-// });
+//API-Call-2
+app.get("/retrievefile", (req, res) => {
+    var output = [];
+    //read directory
+    fs.readdir("./createfilefolder", (err, data) => {
+      data.forEach((fileName) => {
+        output.push({ file_in_Available: fileName });
+      });
+      res.send(output);
+    });
+});
 
 app.listen(PORT, () => console.log("Successfull 😊", PORT)); //port number to listen
-
-// fs.readdir("./backup",(err,data)=>{
-//     data.forEach(fileName =>{
-//         fs.unlink("./backup",()=>{console.log("Deleted Succesfully",fileName)})
-//     })
-// })
