@@ -1,0 +1,3 @@
+Render file (URL) : https://node-filesystem-iaiy.onrender.com/
+Render API endpoint (createfile) : https://node-filesystem-iaiy.onrender.com/createfile
+Render API endpoint (retrievefile) : https://node-filesystem-iaiy.onrender.com/retrievefile
